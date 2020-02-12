@@ -23,14 +23,14 @@ It is an ERC20 token that utilizes OpenZeppelin smart contracts.
 
 The token can be found in aion.sol and contains the following OpenZeppelin smart contracts:
 
+
  - Context.sol
+ - SafeMath.sol
+ - IERC20.sol
  - ERC20.sol
  - ERC20Detailed.sol
  - ERC20Mintable.sol
  - ERC20Burnable.sol
  - ERC20Capped.sol
- - Context.sol
- - MinterRole.sol
  - Roles.sol
- - SafeMath.sol
- - IERC20.sol
+ - MinterRole.sol
