@@ -1,4 +1,4 @@
-pragma solidity 0.5.0;
+pragma solidity ^0.5.0;
 
 // File: openzeppelin-solidity/contracts/token/ERC20/IERC20.sol
 
@@ -502,15 +502,13 @@ contract ERC20Burnable is Context, ERC20 {
     }
 }
 
-// File: contracts/Token.sol
+contract aionToken is ERC20Detailed, ERC20Burnable, ERC20Capped {
 
-contract Token is ERC20Detailed, ERC20Burnable, ERC20Capped {
-
-  constructor() 
-  ERC20Detailed("Name", "SYMBOL", 18) 
+  constructor(string memory name, string memory symbol) 
+  ERC20Detailed(name, symbol, 18) 
   ERC20Capped(1000000000000000000000)
   public {
-      
+      _mint(msg.sender, 100000000000000000000);
   }
   
- }
+}
