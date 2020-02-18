@@ -16,15 +16,15 @@ describe("AionToken contract", function() {
     )
   });
 
-  it("mints tokens", async function() {
+  xit("mints tokens", async function() {
     // TODO
   })
 
-  it("burns tokens", async function() {
+  xit("burns tokens", async function() {
     // TODO
   })
 
-  it("cannot mint tokens over the supply cap", async function() {
+  xit("cannot mint tokens over the supply cap", async function() {
     // TODO
   })
 });

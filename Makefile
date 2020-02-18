@@ -1,3 +1,6 @@
+.PHONY: all
+all: test
+
 .PHONY: install
 install:
 	npm install
@@ -14,3 +17,7 @@ test:
 deploy:
 	test -n "$(PRIVATE_KEY)" # $$PRIVATE_KEY required
 	npx buidler run --network ropsten scripts/deploy.js
+
+.PHONY: flatten
+flatten:
+	npx buidler flatten
