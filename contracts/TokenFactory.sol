@@ -14,7 +14,7 @@ contract TokenFactory {
         uint8 decimals,
         address owner,
         uint256 supplyStart,
-        uint32 supplyMax
+        uint256 supplyCap
     ) public returns (IAionToken) {
         require(
             tokens[symbol] != IAionToken(0),
@@ -27,7 +27,7 @@ contract TokenFactory {
             decimals,
             owner,
             supplyStart,
-            supplyMax
+            supplyCap
         );
         tokens[symbol] = newToken;
 
