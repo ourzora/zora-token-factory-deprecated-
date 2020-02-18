@@ -21,7 +21,7 @@ It is an ERC20 token that utilizes OpenZeppelin smart contracts.
 
 ## Contract
 
-The token can be found in aion.sol and contains the following OpenZeppelin smart contracts:
+The token can be found in contracts/AionToken.sol and contains the following OpenZeppelin smart contracts:
 
  - Context.sol
  - ERC20.sol
