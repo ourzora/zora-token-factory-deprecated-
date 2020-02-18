@@ -12,7 +12,7 @@ async function main() {
   const TokenFactory = env.artifacts.require("TokenFactory");
   const factory = await TokenFactory.new();
 
-  console.log("Token factory address:", greeter.address);
+  console.log("Token factory address:", factory.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
