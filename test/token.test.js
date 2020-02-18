@@ -24,6 +24,10 @@ describe("AionToken contract", function() {
     // TODO
   })
 
+  xit("pauses tokens", async function() {
+    // TODO
+  })
+
   xit("cannot mint tokens over the supply cap", async function() {
     // TODO
   })
