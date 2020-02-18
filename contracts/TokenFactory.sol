@@ -34,4 +34,10 @@ contract TokenFactory {
         return newToken;
     }
 
+    function getTokenBySymbol(
+        string memory symbol
+    ) public view returns (IAionToken) {
+        return tokens[symbol];
+    }
+
 }
