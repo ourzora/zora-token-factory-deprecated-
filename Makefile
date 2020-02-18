@@ -20,4 +20,4 @@ deploy:
 
 .PHONY: flatten
 flatten:
-	npx buidler flatten
+	@ npx buidler flatten
