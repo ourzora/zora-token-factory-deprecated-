@@ -21,8 +21,11 @@ contract AionToken is IAionToken, ERC20Detailed, ERC20Burnable, ERC20Mintable {
   ERC20Detailed(name, symbol, decimals) 
   public {
     _supplyCap = supplyCap;
-    _addMinter(minter);
-    _mint(minter, supplyStart);
+    if (minter != address(0)) {
+      _removeMinter(msg.sender);
+      _addMinter(minter);
+    }
+    _mint(minter == address(0) ? msg.sender : minter, supplyStart);
   }
 
   /**
@@ -41,7 +44,7 @@ contract AionToken is IAionToken, ERC20Detailed, ERC20Burnable, ERC20Mintable {
    */
   function _mint(address account, uint256 value) internal {
     require(
-      _supplyCap != 0 && totalSupply().add(value) <= _supplyCap,
+      _supplyCap == 0 || totalSupply().add(value) <= _supplyCap,
       "Cap exceeded"
     );
 

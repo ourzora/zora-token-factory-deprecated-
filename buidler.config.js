@@ -10,4 +10,16 @@ task("accounts", "Prints the list of accounts", async () => {
   }
 });
 
-module.exports = {};
+module.exports = {
+  defaultNetwork: 'buidlerevm',
+  networks: {
+    ropsten: {
+      url: "https://ropsten.infura.io/v3/96efbe9ad6f94f918aad2c894302c94e",
+      chainId: 3,
+      accounts:
+        process.env.PRIVATE_KEY
+          ? [process.env.PRIVATE_KEY]
+          : "remote"
+    }
+  }
+};

@@ -12,12 +12,12 @@ contract TokenFactory {
         string memory name,
         string memory symbol,
         uint8 decimals,
-        address owner,
+        address minter,
         uint256 supplyStart,
         uint256 supplyCap
     ) public returns (IAionToken) {
         require(
-            tokens[symbol] != IAionToken(0),
+            tokens[symbol] == IAionToken(0),
             "Token symbol already taken"
         );
 
@@ -25,7 +25,7 @@ contract TokenFactory {
             name,
             symbol,
             decimals,
-            owner,
+            minter,
             supplyStart,
             supplyCap
         );

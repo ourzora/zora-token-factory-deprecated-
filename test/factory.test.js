@@ -7,15 +7,47 @@ describe("TokenFactory contract", function() {
     accounts = await web3.eth.getAccounts();
   });
 
-  it("deploys", async function() {
+  it("deploys tokens", async function() {
     const tokenFactory = await TokenFactory.new();
     assert.isNotNull(tokenFactory.address);
+
+    const token = await tokenFactory.createToken(
+      "Zora",
+      "ZORA",
+      0,
+      accounts[0],
+      20,
+      50
+    )
+
+    assert.isNotNull(token.address);
   });
 
-  // TODO: Add more tests
-  // - Mint
-  // - Burn
-  // - Max supply
-  // - Unique symbols
+  it("cannot create tokens with the same symbol", async function() {
+    const tokenFactory = await TokenFactory.new();
+    assert.isNotNull(tokenFactory.address);
 
+    await tokenFactory.createToken(
+      "Zora",
+      "ZORA",
+      0,
+      accounts[0],
+      20,
+      50
+    )
+
+    try {
+      await tokenFactory.createToken(
+        "Zora",
+        "ZORA",
+        0,
+        accounts[0],
+        20,
+        50
+      )
+      assert(false);
+    } catch (err) {
+      console.log(err)
+    }
+  })
 });
