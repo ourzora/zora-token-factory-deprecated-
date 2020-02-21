@@ -6,9 +6,9 @@ import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20Mintable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20Pausable.sol";
 
-import "./IAionToken.sol";
+import "./IToken.sol";
 
-contract AionToken is IAionToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Pausable {
+contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Pausable {
   uint256 private _supplyCap;
 
   constructor(
@@ -57,4 +57,12 @@ contract AionToken is IAionToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, E
     super._mint(account, value);
   }
 
+  /**
+   * @dev Redeems a token with a message hash, burning the value.
+   */
+  function redeem(uint256 amount, bytes32 messageHash) public {
+    require(amount > 0, "Amount must be positive");
+    _burn(msg.sender, amount);
+    emit TokenRedeemed(msg.sender, amount, messageHash);
+  }
 }

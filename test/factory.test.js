@@ -21,36 +21,5 @@ describe("TokenFactory contract", function() {
     )
 
     assert.isNotNull(token.address);
-
-    const fetchedToken = await tokenFactory.getTokenBySymbol("ZORA");
-    assert.equal(token.address, fetchedToken.address);
   });
-
-  it("cannot create tokens with the same symbol", async function() {
-    const tokenFactory = await TokenFactory.new();
-    assert.isNotNull(tokenFactory.address);
-
-    await tokenFactory.createToken(
-      "Zora",
-      "ZORA",
-      0,
-      accounts[0],
-      20,
-      50
-    )
-
-    try {
-      await tokenFactory.createToken(
-        "Zora",
-        "ZORA",
-        0,
-        accounts[0],
-        20,
-        50
-      )
-      assert(false);
-    } catch (err) {
-      assert(true)
-    }
-  })
 });

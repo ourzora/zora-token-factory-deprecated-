@@ -2,7 +2,7 @@ pragma solidity ^0.5.1;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-interface IAionToken {
+interface IToken {
     // ERC20
     function totalSupply() external view returns (uint256);
     function balanceOf(address account) external view returns (uint256);
@@ -17,4 +17,12 @@ interface IAionToken {
     function mint(address account, uint256 amount) external returns (bool);
     function burn(uint256 amount) external;
     function burnFrom(address account, uint256 amount) external;
+
+    // Pause
+    function pause() external;
+    function unpause() external;
+
+    // Redeem
+    function redeem(uint256 amount, bytes32 messageHash) external;
+    event TokenRedeemed(address redeemer, uint256 amount, bytes32 messageHash);
 }

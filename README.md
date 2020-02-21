@@ -1,17 +1,13 @@
-# Aion: 
-
-(Greek: Αἰών) is a Hellenistic deity associated with time, the orb or circle encompassing the universe, and the zodiac.
-
-
 ![Zora: Enabling human progress](https://repository-images.githubusercontent.com/235217500/430f2080-4216-11ea-8468-de88ae01d1f8)
 
 # Zora
+
 Enabling human progress.
 
 **Website:** [ourzora.com](ourzora.com)
 **Twitter:** [@ourZORA](twitter.com/ourZORA)
 
-# The aion token
+## The token
 
 The token contract that enables people to tokenize their time, with a maximum cap of 1000 hours that can be in circulation at any given moment.
 
@@ -21,16 +17,31 @@ It is an ERC20 token that utilizes OpenZeppelin smart contracts.
 
 ## Contract
 
-The token can be found in contracts/AionToken.sol and contains the following OpenZeppelin smart contracts:
+The token can be found in contracts/Token.sol and has the following interface:
 
- - Context.sol
- - ERC20.sol
- - ERC20Detailed.sol
- - ERC20Mintable.sol
- - ERC20Burnable.sol
- - ERC20Capped.sol
- - Context.sol
- - MinterRole.sol
- - Roles.sol
- - SafeMath.sol
- - IERC20.sol
+```solidity
+interface IToken {
+    // ERC20
+    function totalSupply() external view returns (uint256);
+    function balanceOf(address account) external view returns (uint256);
+    function transfer(address recipient, uint256 amount) external returns (bool);
+    function allowance(address owner, address spender) external view returns (uint256);
+    function approve(address spender, uint256 amount) external returns (bool);
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+
+    // Mint & Burn
+    function mint(address account, uint256 amount) external returns (bool);
+    function burn(uint256 amount) external;
+    function burnFrom(address account, uint256 amount) external;
+
+    // Pause
+    function pause() external;
+    function unpause() external;
+
+    // Redeem
+    function redeem(uint256 amount, bytes32 messageHash) external;
+    event TokenRedeemed(address redeemer, uint256 amount, bytes32 messageHash);
+}
+```

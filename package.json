@@ -1,5 +1,5 @@
 {
-  "name": "@ourzora/aion",
+  "name": "@ourzora/zora-contracts",
   "version": "1.0.0",
   "description": "(Greek: Αἰών) is a Hellenistic deity associated with time, the orb or circle encompassing the universe, and the zodiac.",
   "main": "index.js",
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ourzora/aion.git"
+    "url": "git+https://github.com/ourzora/zora-contracts.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ourzora/aion/issues"
+    "url": "https://github.com/ourzora/zora-contracts/issues"
   },
-  "homepage": "https://github.com/ourzora/aion#readme"
+  "homepage": "https://github.com/ourzora/zora-contracts#readme"
 }
