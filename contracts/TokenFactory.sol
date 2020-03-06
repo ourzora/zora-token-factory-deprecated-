@@ -1,6 +1,6 @@
 pragma solidity ^0.5.1;
 
-import "@nomiclabs/buidler/console.sol";
+// import "@nomiclabs/buidler/console.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./Token.sol";
 

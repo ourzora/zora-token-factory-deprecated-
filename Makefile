@@ -13,10 +13,15 @@ compile:
 test:
 	npm test
 
-.PHONY: deploy
-deploy:
+.PHONY: deploy/ropsten
+deploy/ropsten:
 	test -n "$(PRIVATE_KEY)" # $$PRIVATE_KEY required
 	npx buidler run --network ropsten scripts/deploy.js
+
+.PHONY: deploy/mainnet
+deploy/mainnet:
+	test -n "$(PRIVATE_KEY)" # $$PRIVATE_KEY required
+	npx buidler run --network mainnet scripts/deploy.js
 
 .PHONY: flatten
 flatten:
