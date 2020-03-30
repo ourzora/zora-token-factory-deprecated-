@@ -112,7 +112,7 @@ contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Paus
     uint8 v,
     bytes32 r,
     bytes32 s
-  ) external {
+  ) public {
     bytes32 digest =
       keccak256(
         abi.encodePacked(
