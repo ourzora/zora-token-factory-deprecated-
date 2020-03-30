@@ -14,9 +14,10 @@ contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Paus
   /**
    * @dev Permit using EIP712
    */
-  bytes32 public DOMAIN_SEPARATOR;
   // bytes32 public constant PERMIT_TYPEHASH = keccak256("Permit(address holder,address spender,uint256 nonce,uint256 expiry,bool allowed)");
   bytes32 public constant PERMIT_TYPEHASH = 0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb;
+  string public constant VERSION = "1";
+  bytes32 public DOMAIN_SEPARATOR;
   mapping (address => uint256) public permitNonces;
 
   constructor(
@@ -29,7 +30,7 @@ contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Paus
   )
   ERC20Detailed(name, symbol, decimals) 
   public {
-    initDomainSeparator();
+    initDomainSeparator(name);
 
     _supplyCap = supplyCap;
 
@@ -47,7 +48,7 @@ contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Paus
   /**
    * @dev Initializes EIP712 DOMAIN_SEPARATOR based on the current contract and chain ID.
    */
-  function initDomainSeparator() private {
+  function initDomainSeparator(string memory name) private {
     uint256 chainID;
     assembly {
         chainID := chainid()
@@ -57,7 +58,7 @@ contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Paus
       abi.encode(
         keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
         keccak256(bytes(name)),
-        keccak256(bytes(version)),
+        keccak256(bytes(VERSION)),
         chainID,
         address(this)
       )
@@ -135,6 +136,6 @@ contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Paus
     require(nonce == permitNonces[holder]++, "Invalid nonce");
 
     uint amount = allowed ? uint256(-1) : 0;
-    _approve(holder, spender, amount)
+    _approve(holder, spender, amount);
   }
 }
