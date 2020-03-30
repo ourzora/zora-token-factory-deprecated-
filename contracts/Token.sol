@@ -11,6 +11,14 @@ import "./IToken.sol";
 contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Pausable {
   uint256 private _supplyCap;
 
+  /**
+   * @dev Permit using EIP712
+   */
+  bytes32 public DOMAIN_SEPARATOR;
+  // bytes32 public constant PERMIT_TYPEHASH = keccak256("Permit(address holder,address spender,uint256 nonce,uint256 expiry,bool allowed)");
+  bytes32 public constant PERMIT_TYPEHASH = 0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb;
+  mapping (address => uint256) public permitNonces;
+
   constructor(
     string memory name,
     string memory symbol,
@@ -21,6 +29,8 @@ contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Paus
   )
   ERC20Detailed(name, symbol, decimals) 
   public {
+    initDomainSeparator();
+
     _supplyCap = supplyCap;
 
     if (minter != address(0)) {
@@ -32,6 +42,26 @@ contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Paus
     }
 
     _mint(minter == address(0) ? msg.sender : minter, supplyStart);
+  }
+
+  /**
+   * @dev Initializes EIP712 DOMAIN_SEPARATOR based on the current contract and chain ID.
+   */
+  function initDomainSeparator() private {
+    uint256 chainID;
+    assembly {
+        chainID := chainid()
+    }
+
+    DOMAIN_SEPARATOR = keccak256(
+      abi.encode(
+        keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
+        keccak256(bytes(name)),
+        keccak256(bytes(version)),
+        chainID,
+        address(this)
+      )
+    );
   }
 
   /**
@@ -64,5 +94,47 @@ contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Paus
     require(amount > 0, "Amount must be positive");
     _burn(msg.sender, amount);
     emit TokenRedeemed(msg.sender, amount, messageHash);
+  }
+
+  /**
+   * @dev Approve by signature.
+   *
+   * Adapted from MakerDAO's Dai contract:
+   * https://github.com/makerdao/dss/blob/master/src/dai.sol
+   */
+  function permit(
+    address holder,
+    address spender,
+    uint256 nonce,
+    uint256 expiry,
+    bool allowed,
+    uint8 v,
+    bytes32 r,
+    bytes32 s
+  ) external {
+    bytes32 digest =
+      keccak256(
+        abi.encodePacked(
+          "\x19\x01",
+          DOMAIN_SEPARATOR,
+          keccak256(
+            abi.encode(
+              PERMIT_TYPEHASH,
+              holder,
+              spender,
+              nonce,
+              expiry,
+              allowed
+            )
+          )
+        )
+      );
+
+    require(holder == ecrecover(digest, v, r, s), "Signature invalid");
+    require(expiry == 0 || now <= expiry, "Permit expired");
+    require(nonce == permitNonces[holder]++, "Invalid nonce");
+
+    uint amount = allowed ? uint256(-1) : 0;
+    _approve(holder, spender, amount)
   }
 }
