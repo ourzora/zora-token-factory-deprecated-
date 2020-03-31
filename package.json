@@ -1,7 +1,7 @@
 {
   "name": "@ourzora/zora-contracts",
   "version": "1.0.0",
-  "description": "(Greek: Αἰών) is a Hellenistic deity associated with time, the orb or circle encompassing the universe, and the zodiac.",
+  "description": "A token factory that enables any person of community to tokenize any good or endeavour.",
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
@@ -9,6 +9,8 @@
     "@nomiclabs/buidler-truffle5": "^1.1.2",
     "@nomiclabs/buidler-web3": "^1.1.2",
     "@openzeppelin/contracts": "^2.5.0",
+    "eth-sig-util": "^2.5.3",
+    "ethereumjs-util": "^6.2.0",
     "web3": "^1.2.6"
   },
   "scripts": {
@@ -18,7 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/ourzora/zora-contracts.git"
   },
-  "author": "",
+  "author": "Alex Kern <alex@kern.io>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ourzora/zora-contracts/issues"

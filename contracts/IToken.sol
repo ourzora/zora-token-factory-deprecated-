@@ -25,4 +25,7 @@ interface IToken {
     // Redeem
     function redeem(uint256 amount, bytes32 messageHash) external;
     event TokenRedeemed(address redeemer, uint256 amount, bytes32 messageHash);
+
+    // Permit (signature approvals)
+    function permit(address holder, address spender, uint256 nonce, uint256 expiry, bool allowed, uint8 v, bytes32 r, bytes32 s) external;
 }
