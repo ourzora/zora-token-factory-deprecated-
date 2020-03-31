@@ -18,7 +18,12 @@ It is an ERC20 token that utilizes OpenZeppelin smart contracts.
 
 ## Contract
 
-The token can be found in contracts/Token.sol and has the following interface:
+The [TokenFactory](contracts/TokenFactory.sol) contract is deployed at:
+
+* **mainnet:** [0xBc87B26bBe741bA6728627eCD858e7643B1dBD8d](https://etherscan.io/address/0xBc87B26bBe741bA6728627eCD858e7643B1dBD8d#writeContract)
+* **ropsten:** [0xF7AeD95093b307332763c3aAD0922CC0CAD6a4aa](https://ropsten.etherscan.io/address/0xF7AeD95093b307332763c3aAD0922CC0CAD6a4aa#writeContract)
+
+The token can be found in [contracts/Token.sol](contracts/Token.sol) and has the following interface:
 
 ```solidity
 interface IToken {
