@@ -10,7 +10,7 @@ Enabling human progress.
 
 ## The token
 
-The token contract that enables people to tokenize their time, with a maximum cap of 1000 hours that can be in circulation at any given moment.
+The token contract that enables people to tokenize their time, any good, or endeavour, with a maximum cap that can be in circulation at any given moment.
 
 The token is able to be minted and burned by an approved minter. The cap is immutable and cannot be changed at any point past instantiation. 
 
@@ -57,4 +57,6 @@ interface IToken {
 
 ## License & Acknowledgements
 
-MIT License. Shout-out to [@kern](https://github.com/kern) for implementing most contract functionality.
+MIT License.
+
+Built by [@kern](https://github.com/kern) over two cups of tea.
