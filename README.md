@@ -10,7 +10,7 @@ Enabling human progress.
 
 ## The token
 
-The token contract that enables people to tokenize their time, with a maximum cap of 1000 hours that can be in circulation at any given moment.
+The token contract that enables people to tokenize their time, any good, or endeavour, with a maximum cap that can be in circulation at any given moment.
 
 The token is able to be minted and burned by an approved minter. The cap is immutable and cannot be changed at any point past instantiation. 
 
@@ -18,7 +18,12 @@ It is an ERC20 token that utilizes OpenZeppelin smart contracts.
 
 ## Contract
 
-The token can be found in contracts/Token.sol and has the following interface:
+The [TokenFactory](contracts/TokenFactory.sol) contract is deployed at:
+
+* **mainnet:** [0xBc87B26bBe741bA6728627eCD858e7643B1dBD8d](https://etherscan.io/address/0xBc87B26bBe741bA6728627eCD858e7643B1dBD8d#writeContract)
+* **ropsten:** [0xF7AeD95093b307332763c3aAD0922CC0CAD6a4aa](https://ropsten.etherscan.io/address/0xF7AeD95093b307332763c3aAD0922CC0CAD6a4aa#writeContract)
+
+The token can be found in [contracts/Token.sol](contracts/Token.sol) and has the following interface:
 
 ```solidity
 interface IToken {
@@ -52,4 +57,6 @@ interface IToken {
 
 ## License & Acknowledgements
 
-MIT License. Shout-out to [@kern](https://github.com/kern) for implementing most contract functionality.
+MIT License.
+
+Built by [@kern](https://github.com/kern) over two cups of tea.
