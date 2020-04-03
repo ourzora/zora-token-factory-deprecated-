@@ -18,6 +18,11 @@ deploy/ropsten:
 	test -n "$(PRIVATE_KEY)" # $$PRIVATE_KEY required
 	npx buidler run --network ropsten scripts/deploy.js
 
+.PHONY: deploy/rinkeby
+deploy/rinkeby:
+	test -n "$(PRIVATE_KEY)" # $$PRIVATE_KEY required
+	npx buidler run --network rinkeby scripts/deploy.js
+
 .PHONY: deploy/mainnet
 deploy/mainnet:
 	test -n "$(PRIVATE_KEY)" # $$PRIVATE_KEY required
