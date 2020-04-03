@@ -28,6 +28,14 @@ module.exports = {
         process.env.PRIVATE_KEY
           ? [process.env.PRIVATE_KEY]
           : "remote"
+    },
+    rinkeby: {
+      url: "https://rinkeby.infura.io/v3/96efbe9ad6f94f918aad2c894302c94e",
+      chainId: 4,
+      accounts:
+        process.env.PRIVATE_KEY
+          ? [process.env.PRIVATE_KEY]
+          : "remote"
     }
   }
 };
