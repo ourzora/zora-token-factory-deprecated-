@@ -22,6 +22,8 @@ The [TokenFactory](contracts/TokenFactory.sol) contract is deployed at:
 
 * **mainnet:** [0xBc87B26bBe741bA6728627eCD858e7643B1dBD8d](https://etherscan.io/address/0xBc87B26bBe741bA6728627eCD858e7643B1dBD8d#writeContract)
 * **ropsten:** [0xF7AeD95093b307332763c3aAD0922CC0CAD6a4aa](https://ropsten.etherscan.io/address/0xF7AeD95093b307332763c3aAD0922CC0CAD6a4aa#writeContract)
+* **rinkeby:** [0xc9051425f987AF56a630613504119422c86273CE](https://rinkeby.etherscan.io/address/0xc9051425f987af56a630613504119422c86273ce#writeContract)
+
 
 The token can be found in [contracts/Token.sol](contracts/Token.sol) and has the following interface:
 
@@ -54,6 +56,13 @@ interface IToken {
     function permit(address holder, address spender, uint256 nonce, uint256 expiry, bool allowed, uint8 v, bytes32 r, bytes32 s) external;
 }
 ```
+
+## Deployment
+
+```
+make deploy/mainnet PRIVATE_KEY=xyz
+```
+
 
 ## License & Acknowledgements
 
