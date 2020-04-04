@@ -133,8 +133,8 @@ describe("Token contract", function() {
       }, {})
     })
 
-    function generatePermitSignature(holder, spender, nonce, expiry, allowed) {
-      const privateKey = addressToPrivateKey[holder]
+    function generatePermitSignature(owner, spender, value, nonce, deadline) {
+      const privateKey = addressToPrivateKey[owner]
 
       const sig = sigUtil.signTypedData(privateKey, {
         data: {
@@ -146,11 +146,11 @@ describe("Token contract", function() {
               { name: 'verifyingContract', type: 'address' },
             ],
             Permit: [
-              { name: 'holder', type: 'address' },
+              { name: 'owner', type: 'address' },
               { name: 'spender', type: 'address' },
+              { name: 'value', type: 'uint256' },
               { name: 'nonce', type: 'uint256' },
-              { name: 'expiry', type: 'uint256' },
-              { name: 'allowed', type: 'bool' },
+              { name: 'deadline', type: 'uint256' },
             ],
           },
           primaryType: 'Permit',
@@ -161,11 +161,11 @@ describe("Token contract", function() {
             verifyingContract: token.address,
           },
           message: {
-            holder,
+            owner,
             spender,
+            value,
             nonce,
-            expiry,
-            allowed,
+            deadline,
           },
         }
       })
@@ -182,22 +182,22 @@ describe("Token contract", function() {
 
     it("initializes the EIP712 type hash", async function() {
       const val = await token.PERMIT_TYPEHASH()
-      assert.equal('0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb', val)
+      assert.equal('0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9', val)
     })
 
     it("allows permit calls with valid signatures", async function() {
       const [v, r, s] = generatePermitSignature(
         accounts[1],
         accounts[2],
+        2**10 - 1,
         0,
         0,
-        true
       )
 
-      await token.permit(accounts[1], accounts[2], 0, 0, true, v, r, s);
+      await token.permit(accounts[1], accounts[2], 2**10 - 1, 0, v, r, s);
 
       const allowance = await token.allowance(accounts[1], accounts[2])
-      assert.equal(2**256 - 1, allowance)
+      assert.equal(2**10 - 1, allowance)
     })
 
     it("allows permit calls with valid signature and expiration", async function() {
@@ -205,35 +205,35 @@ describe("Token contract", function() {
       const [v, r, s] = generatePermitSignature(
         accounts[1],
         accounts[2],
+        2**10 - 1,
         0,
         expiration,
-        true
       )
 
-      await token.permit(accounts[1], accounts[2], 0, expiration, true, v, r, s);
+      await token.permit(accounts[1], accounts[2], 2**10 - 1, expiration, v, r, s);
 
       const allowance = await token.allowance(accounts[1], accounts[2])
-      assert.equal(2**256 - 1, allowance)
+      assert.equal(2**10 - 1, allowance)
     })
 
-    it("allows permit calls with valid signature to disable the allowance", async function() {
+    it("allows permit calls with valid signature to override the allowance", async function() {
       let [v, r, s] = generatePermitSignature(
         accounts[1],
         accounts[2],
+        2**10 - 1,
         0,
         0,
-        true
       );
-      await token.permit(accounts[1], accounts[2], 0, 0, true, v, r, s);
+      await token.permit(accounts[1], accounts[2], 2**10 - 1, 0, v, r, s);
 
       [v, r, s] = generatePermitSignature(
         accounts[1],
         accounts[2],
+        0,
         1,
         0,
-        false
       );
-      await token.permit(accounts[1], accounts[2], 1, 0, false, v, r, s);
+      await token.permit(accounts[1], accounts[2], 0, 0, v, r, s);
 
       const allowance = await token.allowance(accounts[1], accounts[2])
       assert.equal(0, allowance)
@@ -243,13 +243,13 @@ describe("Token contract", function() {
       const [v, r, s] = generatePermitSignature(
         accounts[1],
         accounts[2],
+        2**10 - 1,
         0,
         0,
-        true
       )
 
       try {
-        await token.permit(0, accounts[2], 0, 0, true, v, r, s);
+        await token.permit(0, accounts[2], 2**10 - 1, 0, v, r, s);
         assert(false, "Cannot permit 0 address")
       } catch (err) {
         if (err.name === 'AssertionError') {
@@ -262,13 +262,13 @@ describe("Token contract", function() {
       const [v, r, s] = generatePermitSignature(
         accounts[1],
         accounts[2],
+        2**10 - 1,
         0,
         5,
-        true
       )
 
       try {
-        await token.permit(accounts[1], accounts[2], 0, 5, true, v, r, s);
+        await token.permit(accounts[1], accounts[2], 2**10 - 1, 5, v, r, s);
         assert(false, "Cannot permit expired signature")
       } catch (err) {
         if (err.name === 'AssertionError') {
@@ -281,15 +281,15 @@ describe("Token contract", function() {
       const [v, r, s] = generatePermitSignature(
         accounts[1],
         accounts[2],
+        2**10 - 1,
         0,
         0,
-        true
       )
 
-      await token.permit(accounts[1], accounts[2], 0, 0, true, v, r, s);
+      await token.permit(accounts[1], accounts[2], 2**10 - 1, 0, v, r, s);
 
       try {
-        await token.permit(accounts[1], accounts[2], 0, 0, true, v, r, s);
+        await token.permit(accounts[1], accounts[2], 2**10 - 1, 0, v, r, s);
         assert(false, "Cannot replay permit call")
       } catch (err) {
         if (err.name === 'AssertionError') {
