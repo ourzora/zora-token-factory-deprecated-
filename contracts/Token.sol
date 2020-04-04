@@ -14,8 +14,8 @@ contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Paus
   /**
    * @dev Permit using EIP712
    */
-  // bytes32 public constant PERMIT_TYPEHASH = keccak256("Permit(address holder,address spender,uint256 nonce,uint256 expiry,bool allowed)");
-  bytes32 public constant PERMIT_TYPEHASH = 0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb;
+  // keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
+  bytes32 public constant PERMIT_TYPEHASH = 0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9;
   string public constant VERSION = "1";
   bytes32 public DOMAIN_SEPARATOR;
   mapping (address => uint256) public permitNonces;
@@ -100,19 +100,21 @@ contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Paus
   /**
    * @dev Approve by signature.
    *
-   * Adapted from MakerDAO's Dai contract:
+   * Adapted from Uniswap's UniswapV2ERC20 and MakerDAO's Dai contracts:
+   * https://github.com/Uniswap/uniswap-v2-core/blob/master/contracts/UniswapV2ERC20.sol
    * https://github.com/makerdao/dss/blob/master/src/dai.sol
    */
   function permit(
-    address holder,
+    address owner,
     address spender,
-    uint256 nonce,
-    uint256 expiry,
-    bool allowed,
+    uint256 value,
+    uint256 deadline,
     uint8 v,
     bytes32 r,
     bytes32 s
   ) public {
+    require(deadline == 0 || deadline >= block.timestamp, "Zora: Permit expired");
+
     bytes32 digest =
       keccak256(
         abi.encodePacked(
@@ -121,21 +123,19 @@ contract Token is IToken, ERC20Detailed, ERC20Burnable, ERC20Mintable, ERC20Paus
           keccak256(
             abi.encode(
               PERMIT_TYPEHASH,
-              holder,
+              owner,
               spender,
-              nonce,
-              expiry,
-              allowed
+              value,
+              permitNonces[owner]++,
+              deadline
             )
           )
         )
       );
 
-    require(holder == ecrecover(digest, v, r, s), "Signature invalid");
-    require(expiry == 0 || now <= expiry, "Permit expired");
-    require(nonce == permitNonces[holder]++, "Invalid nonce");
+    address recoveredAddress = ecrecover(digest, v, r, s);
+    require(recoveredAddress != address(0) && owner == recoveredAddress, "Zora: Signature invalid");
 
-    uint amount = allowed ? uint256(-1) : 0;
-    _approve(holder, spender, amount);
+    _approve(owner, spender, value);
   }
 }
