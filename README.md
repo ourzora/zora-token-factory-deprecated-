@@ -10,19 +10,19 @@ Enabling human progress.
 
 ## The token
 
-The token contract that enables people to tokenize their time, any good, or endeavour, with a maximum cap that can be in circulation at any given moment.
+The token contract that enables creators to tokenize any good, artwork, time or endeavour, with a maximum cap that can be in circulation at any given moment.
 
 The token is able to be minted and burned by an approved minter. The cap is immutable and cannot be changed at any point past instantiation. 
 
-It is an ERC20 token that utilizes OpenZeppelin smart contracts.
+The tokens follow the Uniswap permit() function signature, enabling developers to pay gas for user transactions.
 
 ## Contract
 
 The [TokenFactory](contracts/TokenFactory.sol) contract is deployed at:
 
-* **mainnet:** [0xBc87B26bBe741bA6728627eCD858e7643B1dBD8d](https://etherscan.io/address/0xBc87B26bBe741bA6728627eCD858e7643B1dBD8d#writeContract)
-* **ropsten:** [0xF7AeD95093b307332763c3aAD0922CC0CAD6a4aa](https://ropsten.etherscan.io/address/0xF7AeD95093b307332763c3aAD0922CC0CAD6a4aa#writeContract)
-* **rinkeby:** [0xc9051425f987AF56a630613504119422c86273CE](https://rinkeby.etherscan.io/address/0xc9051425f987af56a630613504119422c86273ce#writeContract)
+* **mainnet:** [0x322af773A1395EDD762b2e10F2cD9Dd015d40BC5](https://etherscan.io/address/0x322af773a1395edd762b2e10f2cd9dd015d40bc5#writeContract)
+* **ropsten:** [0x5e0075f4f5f9ebf78da12f54e32721669392097e](https://ropsten.etherscan.io/address/0x5e0075f4f5f9ebf78da12f54e32721669392097e#writeContract)
+* **rinkeby:** [0x8dcF2cfadDD266b926e5C4A7c6112b0B4037bBd0](https://rinkeby.etherscan.io/address/0x8dcf2cfaddd266b926e5c4a7c6112b0b4037bbd0#writeContract)
 
 
 The token can be found in [contracts/Token.sol](contracts/Token.sol) and has the following interface:
@@ -61,6 +61,17 @@ interface IToken {
 
 ```
 make deploy/mainnet PRIVATE_KEY=xyz
+
+make deploy/ropsten PRIVATE_KEY=xyz
+
+make deploy/rinkeby PRIVATE_KEY=xyz
+
+```
+
+## Misc
+
+```
+make flatten | pbcopy
 ```
 
 
