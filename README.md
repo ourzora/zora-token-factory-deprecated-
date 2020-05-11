@@ -1,4 +1,4 @@
-![Zora: Enabling human progress](https://repository-images.githubusercontent.com/235217500/430f2080-4216-11ea-8468-de88ae01d1f8)
+![Zora: Enabling human progress](https://repository-images.githubusercontent.com/235217500/00adc180-9377-11ea-9ce9-f5e962b78075)
 
 # Zora
 
