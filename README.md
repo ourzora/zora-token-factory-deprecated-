@@ -5,7 +5,7 @@
 Bring your ideas to life.
 
 **Website:** [ourzora.com](ourzora.com)
-
+**Instagram:** [@our.zora](instagram.com/our.zora)
 **Twitter:** [@ourZORA](twitter.com/ourZORA)
 
 ## The token
