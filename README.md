@@ -2,7 +2,7 @@
 
 # Zora
 
-Enabling human progress.
+Bring your ideas to life.
 
 **Website:** [ourzora.com](ourzora.com)
 
