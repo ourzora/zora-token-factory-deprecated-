@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./Token.sol";
 
 contract TokenFactory {
+    address[] public tokens;
 
     function createToken(
         string memory name,
@@ -22,8 +23,12 @@ contract TokenFactory {
             supplyStart,
             supplyCap
         );
+        tokens.push(address(newToken));
 
         return newToken;
     }
-
+    
+    function getTokenCount() public view returns (uint256 TokenCount) {
+        return tokens.length;
+    }
 }
